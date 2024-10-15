@@ -10,15 +10,37 @@ let customers = [
     {id:9, name:"Ashlie Wozencraft", age:23, address:{city:"Espinosa", street:"78 Pepper Wood Terrace", house:11}, newsLetter: false},
     {id:10, name:"Jonas Tungate", age:83, address:{city:"Padangulaktanding", street:"224 Manley Drive", house:49}, newsLetter: true}
 ]
-function isAddress(address) {    
-    //TODO
+
+function isAddress(address) {
+    return typeof address.city === "string" && typeof address.street === "string" && typeof address.house === "number";
 }
 
-function isCustomer(name, age, address, newsLetter) {    
-    //TODO
+function isCustomer(name, age, address, newsLetter) {
+    return typeof name === "string" && typeof age === "number" && typeof newsLetter === "boolean" && isAddress(address);
 }
-function modifyCustomer (customer){
-    //TODO
+
+function isCustomerT(customer) {
+    return isCustomer(customer.name, customer.age, customer.address, customer.newsLetter);
+}
+
+function modifyCustomer(customer){
+    if (!isCustomerT(customer))
+        return false;
+
+    let customerId = customers.findIndex((x) => x.id === customer.id);
+    customers[customerId].name = customer.name;
+    customers[customerId].address = customer.address;
+    customers[customerId].age = customer.age;
+    customers[customerId].newsLetter = customer.newsLetter;
+
+    /*for (const key in customers[customerId]) {
+        if (Object.prototype.hasOwnProperty.call(customers[customerId], key)) {
+            const element = customers[customerId][key];
+            element[key] = customer[key];
+        }
+    }*/
+
+    return customers;
 }
 
 module.exports = modifyCustomer;
